@@ -1,4 +1,12 @@
-package jstr
+/**********************************************************************************************************************
+ *      _ _
+ *     | (_)_ __   __ _
+ *  _  | | | '_ \ / _` |
+ * | |_| | | | | | (_| |
+ *  \___/|_|_| |_|\__, |                        https://github.com/yingzhuo/jing
+ *                |___/
+ **********************************************************************************************************************/
+package str
 
 import (
 	"strings"
@@ -9,16 +17,12 @@ const (
 	EmptyString = ""
 )
 
-func ToRunes(s string) []rune {
-	return []rune(s)
-}
-
 func Length(s string) int {
-	return len(ToRunes(s))
+	return len(ToRuneSlice(s))
 }
 
 func CountRune(s string) int {
-	return len(ToRunes(s))
+	return len(ToRuneSlice(s))
 }
 
 func CountRuneFunc(s string, fn func(r rune) bool) int {
@@ -50,7 +54,7 @@ func AllMatches(s string, fn func(r rune) bool) bool {
 }
 
 func NoneMatches(s string, fn func(r rune) bool) bool {
-	for _, ch := range ToRunes(s) {
+	for _, ch := range ToRuneSlice(s) {
 		if fn(ch) {
 			return false
 		}

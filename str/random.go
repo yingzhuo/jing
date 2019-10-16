@@ -1,13 +1,21 @@
-package jstr
+/**********************************************************************************************************************
+ *      _ _
+ *     | (_)_ __   __ _
+ *  _  | | | '_ \ / _` |
+ * | |_| | | | | | (_| |
+ *  \___/|_|_| |_|\__, |                        https://github.com/yingzhuo/jing
+ *                |___/
+ **********************************************************************************************************************/
+package str
 
 import (
 	"math/rand"
 )
 
 var (
-	alphanumeric = ToRunes("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-	alphabetic   = ToRunes("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-	numeric      = ToRunes("0123456789")
+	alphanumeric = ToRuneSlice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+	alphabetic   = ToRuneSlice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	numeric      = ToRuneSlice("0123456789")
 )
 
 func NewRandomAlphabetic(n int) string {

@@ -1,6 +1,5 @@
 TIMESTAMP	:= $(shell /bin/date "+%F %T")
 NAME		:= jing
-VERSION		:= v1.0.0
 
 default:
 	@echo "no default target"; false
@@ -11,7 +10,7 @@ fmt:
 test:
 	@go test $(CURDIR)/...
 
-github: test fmt
+github: fmt
 	@git add .
 	@git commit -m "$(TIMESTAMP)"
 	@git push

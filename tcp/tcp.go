@@ -1,12 +1,17 @@
-package jtcp
+package tcp
 
 import (
-	"github.com/yingzhuo/jing/jstr"
+	"github.com/yingzhuo/jing/str"
 	"net"
 )
 
+// tcp可连通时返回true
+// 否则返回false
+//
+// 例子:
+//  IsReachable("localhost:8080")
 func IsReachable(addr string) bool {
-	if jstr.IsBlank(addr) {
+	if str.IsBlank(addr) {
 		panic("addr is blank")
 	}
 
@@ -21,6 +26,11 @@ func IsReachable(addr string) bool {
 	return err == nil
 }
 
+// tcp不可连通时返回true
+// 否则返回false
+//
+// 例子:
+//  IsNotReachable("localhost:8080")
 func IsNotReachable(addr string) bool {
 	return !IsReachable(addr)
 }
