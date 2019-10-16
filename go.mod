@@ -2,4 +2,4 @@ module github.com/yingzhuo/jing
 
 go 1.13
 
-require golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550 // indirect
+require golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550

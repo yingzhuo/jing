@@ -5,12 +5,12 @@ import (
 	"net"
 )
 
-func IsReachable(address string) bool {
-	if jstr.IsBlank(address) {
-		return false
+func IsReachable(addr string) bool {
+	if jstr.IsBlank(addr) {
+		panic("addr is blank")
 	}
 
-	conn, err := net.Dial("tcp", address)
+	conn, err := net.Dial("tcp", addr)
 
 	defer func() {
 		if conn != nil {
@@ -19,4 +19,8 @@ func IsReachable(address string) bool {
 	}()
 
 	return err == nil
+}
+
+func IsNotReachable(addr string) bool {
+	return !IsReachable(addr)
 }
