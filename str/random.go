@@ -13,69 +13,50 @@ import (
 )
 
 var (
-	alphanumeric = ToRuneSlice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-	alphabetic   = ToRuneSlice("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-	numeric      = ToRuneSlice("0123456789")
+	alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	alphabetic   = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	numeric      = "0123456789"
 )
 
-func NewRandomAlphabetic(n int) string {
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = alphabetic[rand.Intn(len(alphabetic))]
-	}
-	return string(b)
+const (
+	letterIdxBits = 6                    // 6 bits to represent a letter index
+	letterIdxMask = 1<<letterIdxBits - 1 // All 1-bits, as many as letterIdxBits
+)
+
+// 生成随机n位长度英文字母字符串
+//  n: 长度
+//
+// 例子:
+//  RandAlphabetic(10)
+func RandAlphabetic(n int) string {
+	return RandString(n, alphabetic)
 }
 
-func NewRandomNumeric(n int) string {
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = numeric[rand.Intn(len(numeric))]
-	}
-	return string(b)
+// 生成随机n位长度数字字符串
+//  n: 长度
+//
+// 例子:
+//  RandNumeric(10)
+func RandNumeric(n int) string {
+	return RandString(n, numeric)
 }
 
-func NewRandomAlphanumeric(n int) string {
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = alphanumeric[rand.Intn(len(alphanumeric))]
-	}
-	return string(b)
+// 生成随机n位长度数字或英文字母字符串
+//  n: 长度
+//
+// 例子:
+//  RandAlphanumeric(10)
+func RandAlphanumeric(n int) string {
+	return RandString(n, alphanumeric)
 }
 
-func NewRandomString(n int, charset string) string {
-
-	charsetLen := len(charset)
-	if charsetLen == 0 || charsetLen > 256 {
-		panic("charset n must be greater than 0 and less than or equal to 256")
-	}
-	var bitLength byte
-	var bitMask byte
-	for bits := charsetLen - 1; bits != 0; {
-		bits = bits >> 1
-		bitLength++
-	}
-	bitMask = 1<<bitLength - 1
-
-	bufferSize := n + n/3
-
-	result := make([]byte, n)
-	for i, j, randomBytes := 0, 0, []byte{}; i < n; j++ {
-		if j%bufferSize == 0 {
-			// Random byte buffer is empty, get a new one
-			randomBytes = secureRandomBytes(bufferSize)
-		}
-		// Mask bytes to get an index into the character slice
-		if idx := int(randomBytes[j%n] & bitMask); idx < charsetLen {
-			result[i] = charset[idx]
+func RandString(n int, charset string) string {
+	b := make([]byte, n)
+	for i := 0; i < n; {
+		if idx := int(rand.Int63() & letterIdxMask); idx < len(charset) {
+			b[i] = charset[idx]
 			i++
 		}
 	}
-
-	return string(result)
-}
-
-func secureRandomBytes(length int) []byte {
-	var randomBytes = make([]byte, length)
-	_, _ = rand.Read(randomBytes)
-	return randomBytes
+	return string(b)
 }
