@@ -28,12 +28,16 @@ func (ss StringSlice) Sort() {
 	sort.Sort(ss)
 }
 
-func (ss StringSlice) Reverse() {
+func (ss StringSlice) SortReverse() {
 	sort.Sort(sort.Reverse(ss))
 }
 
 func (ss StringSlice) IsSorted() bool {
 	return sort.IsSorted(ss)
+}
+
+func (ss StringSlice) Size() int {
+	return len(ss)
 }
 
 func (ss StringSlice) Map(fn func(s string) string) StringSlice {
