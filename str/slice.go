@@ -94,3 +94,13 @@ func (ss StringSlice) NoneMatch(fn func(s string) bool) bool {
 	}
 	return true
 }
+
+func (ss StringSlice) Reverse() {
+	if length := len(ss); length == 0 || length == 1 {
+		return
+	}
+
+	for i, j := 0, len(ss)-1; i < j; i, j = i+1, j-1 {
+		ss[i], ss[j] = ss[j], ss[i]
+	}
+}

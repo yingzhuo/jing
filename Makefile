@@ -15,4 +15,4 @@ github: fmt
 	@git commit -m "$(TIMESTAMP)"
 	@git push
 
-.PHONY: usage fmt test github
+.PHONY: default fmt test github
