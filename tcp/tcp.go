@@ -9,8 +9,9 @@
 package tcp
 
 import (
-	"github.com/yingzhuo/jing/str"
 	"net"
+
+	"github.com/yingzhuo/jing/str"
 )
 
 // tcp可连通时返回true

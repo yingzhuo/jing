@@ -14,8 +14,9 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"fmt"
-	"golang.org/x/crypto/md4"
 	"io"
+
+	"golang.org/x/crypto/md4"
 )
 
 func MD4(s string) string {
