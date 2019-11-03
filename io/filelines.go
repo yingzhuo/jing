@@ -57,7 +57,7 @@ func (fl *FileLines) Map(fn func(line string) string) *FileLines {
 	return result
 }
 
-func (fl *FileLines) TrimSpace() *FileLines {
+func (fl *FileLines) TrimAll() *FileLines {
 	return fl.Map(func(line string) string {
 		return strings.TrimSpace(line)
 	})

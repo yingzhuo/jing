@@ -10,10 +10,14 @@ package io
 
 import "io/ioutil"
 
-func LoadFileContent(filename string) string {
-	if data, err := ioutil.ReadFile(filename); err != nil {
+func LoadFileString(filename string) string {
+	return string(LoadFileBytes(filename))
+}
+
+func LoadFileBytes(filename string) []byte {
+	if bytes, err := ioutil.ReadFile(filename); err != nil {
 		panic(err)
 	} else {
-		return string(data)
+		return bytes
 	}
 }

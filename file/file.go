@@ -8,31 +8,41 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 package file
 
-import "os"
+import (
+	"os"
+)
 
-func Exists(name string) bool {
-	_, err := os.Stat(name)
+func Exists(filename string) bool {
+	_, err := os.Stat(filename)
 	return !os.IsNotExist(err)
 }
 
-func IsDirExists(name string) bool {
-	if info, err := os.Stat(name); err != nil {
-		panic(err)
+func IsDirExists(filename string) bool {
+	if info, err := os.Stat(filename); err != nil {
+		return false
 	} else {
 		return info.IsDir()
 	}
 }
 
-func IsFileExists(name string) bool {
-	if info, err := os.Stat(name); err != nil {
-		panic(err)
+func IsDirNotExists(filename string) bool {
+	return !IsDirExists(filename)
+}
+
+func IsFileExists(filename string) bool {
+	if info, err := os.Stat(filename); err != nil {
+		return false
 	} else {
 		return !info.IsDir()
 	}
 }
 
-func Size(name string) int64 {
-	if info, err := os.Stat(name); err != nil {
+func IsFileNotExists(filename string) bool {
+	return !IsFileExists(filename)
+}
+
+func Size(filename string) int64 {
+	if info, err := os.Stat(filename); err != nil {
 		panic(err)
 	} else {
 		return info.Size()
