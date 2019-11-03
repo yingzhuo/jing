@@ -1,11 +1,11 @@
-/**********************************************************************************************************************
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *      _ _
  *     | (_)_ __   __ _
  *  _  | | | '_ \ / _` |
  * | |_| | | | | | (_| |
  *  \___/|_|_| |_|\__, |                        https://github.com/yingzhuo/jing
  *                |___/
- **********************************************************************************************************************/
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 package file
 
 import "os"
@@ -15,7 +15,7 @@ func Exists(name string) bool {
 	return !os.IsNotExist(err)
 }
 
-func IsDir(name string) bool {
+func IsDirExists(name string) bool {
 	if info, err := os.Stat(name); err != nil {
 		panic(err)
 	} else {
@@ -23,7 +23,7 @@ func IsDir(name string) bool {
 	}
 }
 
-func IsFile(name string) bool {
+func IsFileExists(name string) bool {
 	if info, err := os.Stat(name); err != nil {
 		panic(err)
 	} else {

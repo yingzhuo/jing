@@ -6,28 +6,20 @@
  *  \___/|_|_| |_|\__, |                        https://github.com/yingzhuo/jing
  *                |___/
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-package str
+package file
 
 import (
-	"fmt"
-	"math/rand"
-	"time"
+	"path/filepath"
+	"strings"
 )
 
-// 生成36位UUID
-func NewUUID36() string {
-	b := make([]byte, 16)
-	rand.Read(b)
-	return fmt.Sprintf("%x-%x-%x-%x-%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:])
-}
+func BetterFilename(filename string) string {
+	filename = strings.TrimSpace(filename)
 
-// 生成32位UUID
-func NewUUID32() string {
-	b := make([]byte, 16)
-	rand.Read(b)
-	return fmt.Sprintf("%x%x%x%x%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:])
-}
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
+	switch filename {
+	case "", ".", "..":
+		return filename
+	default:
+		return filepath.Clean(filename)
+	}
 }

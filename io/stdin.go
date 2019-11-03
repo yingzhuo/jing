@@ -6,28 +6,33 @@
  *  \___/|_|_| |_|\__, |                        https://github.com/yingzhuo/jing
  *                |___/
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-package str
+package io
 
 import (
-	"fmt"
-	"math/rand"
-	"time"
+	"bufio"
+	"io"
+	"os"
 )
 
-// 生成36位UUID
-func NewUUID36() string {
-	b := make([]byte, 16)
-	rand.Read(b)
-	return fmt.Sprintf("%x-%x-%x-%x-%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:])
-}
+func LoadStdin() string {
+	info, err := os.Stdin.Stat()
+	if err != nil {
+		return ""
+	}
 
-// 生成32位UUID
-func NewUUID32() string {
-	b := make([]byte, 16)
-	rand.Read(b)
-	return fmt.Sprintf("%x%x%x%x%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:])
-}
+	if info.Mode()&os.ModeCharDevice != 0 || info.Size() <= 0 {
+		return ""
+	}
 
-func init() {
-	rand.Seed(time.Now().UnixNano())
+	reader := bufio.NewReader(os.Stdin)
+	var output []rune
+
+	for {
+		input, _, err := reader.ReadRune()
+		if err != nil && err == io.EOF {
+			break
+		}
+		output = append(output, input)
+	}
+	return string(output)
 }
