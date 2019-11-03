@@ -62,10 +62,10 @@ func LookupDuration(key string, defaultValue time.Duration) time.Duration {
 	if value, ok := os.LookupEnv(key); !ok {
 		return defaultValue
 	} else {
-		if ret, err := strconv.ParseInt(value, 10, 64); err != nil {
+		if ret, err := time.ParseDuration(value); err != nil {
 			return defaultValue
 		} else {
-			return time.Duration(ret)
+			return ret
 		}
 	}
 }
