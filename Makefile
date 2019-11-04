@@ -1,7 +1,7 @@
 TIMESTAMP	:= $(shell /bin/date "+%F %T")
 NAME		:= jing
 
-default:
+no_default:
 	@echo "no default target"; false
 
 fmt:
@@ -15,4 +15,4 @@ github: fmt
 	@git commit -m "$(TIMESTAMP)"
 	@git push
 
-.PHONY: default fmt test github
+.PHONY: no_default fmt test github

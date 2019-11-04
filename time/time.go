@@ -38,6 +38,10 @@ var timePatterns = []string{
 	"2006/01/02 15:04:05 -0700",
 }
 
+func LocalNow() time.Time {
+	return time.Now().Local()
+}
+
 func ParseTimeWildly(s string) (*time.Time, error) {
 	for _, pattern := range timePatterns {
 		if d, err := time.Parse(pattern, s); err == nil {

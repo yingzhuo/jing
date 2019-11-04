@@ -10,6 +10,7 @@ package file
 
 import (
 	"os"
+	"time"
 )
 
 func Exists(filename string) bool {
@@ -47,4 +48,33 @@ func Size(filename string) int64 {
 	} else {
 		return info.Size()
 	}
+}
+
+func Touch(filename string) error {
+
+	var err error
+
+	if IsFileExists(filename) {
+		now := time.Now().Local()
+		err = os.Chtimes(filename, now, now)
+		return err
+	}
+
+	fg := os.O_CREATE | os.O_WRONLY
+	file, err := os.OpenFile(filename, fg, 0644)
+
+	defer func() {
+		if file != nil {
+			file.Close()
+		}
+	}()
+
+	return err
+}
+
+func MakeDir(dirname string) error {
+	if IsDirExists(dirname) {
+		return nil
+	}
+	return os.MkdirAll(dirname, 0777)
 }
