@@ -20,9 +20,7 @@ func NewFileLines(filename string) (*FileLines, error) {
 		return nil, err
 	}
 
-	defer func() {
-		_ = f.Close()
-	}()
+	defer f.Close()
 
 	result := &FileLines{
 		Count: 0,

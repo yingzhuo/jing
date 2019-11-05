@@ -9,13 +9,21 @@
 package file
 
 import (
+	"fmt"
+	"io/ioutil"
 	"os"
+	"strings"
 	"time"
 )
 
-func Exists(filename string) bool {
+func IsExists(filename string) bool {
 	_, err := os.Stat(filename)
 	return !os.IsNotExist(err)
+}
+
+func IsSymlink(filename string) bool {
+	info, err := os.Lstat(filename)
+	return err == nil && (info.Mode()&os.ModeSymlink != 0)
 }
 
 func IsDirExists(filename string) bool {
@@ -76,5 +84,43 @@ func MakeDir(dirname string) error {
 	if IsDirExists(dirname) {
 		return nil
 	}
-	return os.MkdirAll(dirname, 0777)
+	if IsFileExists(dirname) {
+		return fmt.Errorf("%s is exists, but it is not a dir", dirname)
+	}
+	return os.MkdirAll(dirname, os.ModePerm)
+}
+
+func RemoveFileOrDir(name string) error {
+
+	if info, err := os.Stat(name); err != nil {
+		return nil
+	} else if info.IsDir() {
+		return os.RemoveAll(name)
+	} else {
+		return os.Remove(name)
+	}
+}
+
+func CleanDir(dirname string) error {
+	if IsFileExists(dirname) {
+		return fmt.Errorf("%s is exists, and it is not a dir", dirname)
+	}
+
+	if !strings.HasSuffix(dirname, "/") {
+		dirname += "/"
+	}
+
+	fs, err := ioutil.ReadDir(dirname)
+	if err != nil {
+		return err
+	}
+
+	for _, f := range fs {
+		err := RemoveFileOrDir(dirname + f.Name())
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
