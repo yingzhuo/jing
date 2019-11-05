@@ -58,6 +58,14 @@ func Size(filename string) int64 {
 	}
 }
 
+func GetLastModified(filename string) time.Time {
+	info, err := os.Stat(filename)
+	if err != nil {
+		return time.Unix(0, 0)
+	}
+	return info.ModTime()
+}
+
 func Touch(filename string) error {
 
 	var err error
