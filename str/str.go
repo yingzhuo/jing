@@ -18,11 +18,11 @@ const (
 )
 
 func Length(s string) int {
-	return len(ToRuneSlice(s))
+	return len([]rune(s))
 }
 
 func CountRune(s string) int {
-	return len(ToRuneSlice(s))
+	return len([]rune(s))
 }
 
 func CountRuneFunc(s string, fn func(r rune) bool) int {
@@ -54,7 +54,7 @@ func AllMatches(s string, fn func(r rune) bool) bool {
 }
 
 func NoneMatches(s string, fn func(r rune) bool) bool {
-	for _, ch := range ToRuneSlice(s) {
+	for _, ch := range []rune(s) {
 		if fn(ch) {
 			return false
 		}
