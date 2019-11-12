@@ -10,6 +10,8 @@ package os
 
 import (
 	"os"
+	"runtime"
+	"strings"
 )
 
 func GetPWD() string {
@@ -18,4 +20,16 @@ func GetPWD() string {
 		dir = "."
 	}
 	return dir
+}
+
+func IsWindows() bool {
+	return strings.EqualFold("windows", runtime.GOOS)
+}
+
+func IsMacOS() bool {
+	return strings.EqualFold("darwin", runtime.GOOS)
+}
+
+func IsLinux() bool {
+	return strings.EqualFold("linux", runtime.GOOS)
 }
