@@ -30,6 +30,10 @@ func IsMacOS() bool {
 	return strings.EqualFold("darwin", runtime.GOOS)
 }
 
+func IsDarwin() bool {
+	return IsMacOS()
+}
+
 func IsLinux() bool {
 	return strings.EqualFold("linux", runtime.GOOS)
 }
