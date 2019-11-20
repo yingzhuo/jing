@@ -60,6 +60,20 @@ func (ss *StringSlice) Map(fn func(s string) string) *StringSlice {
 	return &ret
 }
 
+func (ss *StringSlice) Unique() *StringSlice {
+	dict := make(map[string]bool)
+
+	nss := &StringSlice{}
+	for _, it := range *ss {
+		if !dict[it] {
+			nss.Add(it)
+			dict[it] = true
+		}
+	}
+
+	return nss
+}
+
 func (ss *StringSlice) Reverse() {
 	if length := len(*ss); length == 0 || length == 1 {
 		return
