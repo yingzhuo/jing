@@ -15,6 +15,10 @@ import (
 
 type StringSlice []string
 
+func NewStringSlice() *StringSlice {
+	return &StringSlice{}
+}
+
 func (ss *StringSlice) String() string {
 	return strings.Join(*ss, ",")
 }
@@ -53,11 +57,15 @@ func (ss *StringSlice) IsSorted() bool {
 }
 
 func (ss *StringSlice) Map(fn func(s string) string) *StringSlice {
-	ret := make(StringSlice, len(*ss))
+	ret := make(StringSlice, 0)
 	for _, s := range *ss {
 		ret = append(ret, fn(s))
 	}
 	return &ret
+}
+
+func (ss *StringSlice) TrimEach() *StringSlice {
+	return ss.Map(strings.TrimSpace)
 }
 
 func (ss *StringSlice) Unique() *StringSlice {
@@ -70,7 +78,6 @@ func (ss *StringSlice) Unique() *StringSlice {
 			dict[it] = true
 		}
 	}
-
 	return nss
 }
 
