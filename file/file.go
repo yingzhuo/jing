@@ -10,6 +10,7 @@ package file
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -24,6 +25,20 @@ func IsExists(filename string) bool {
 func IsSymlink(filename string) bool {
 	info, err := os.Lstat(filename)
 	return err == nil && (info.Mode()&os.ModeSymlink != 0)
+}
+
+func IsEmptyDir(dirname string) bool {
+	f, err := os.Open(dirname)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	_, err = f.Readdirnames(1) // Or f.Readdir(1)
+	if err == io.EOF {
+		return true
+	}
+	return false
 }
 
 func IsDirExists(filename string) bool {
