@@ -11,8 +11,23 @@ package env
 import (
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
+
+func GetAll() map[string]string {
+	dict := make(map[string]string)
+
+	for _, v := range os.Environ() {
+		i := strings.Index(v, "=")
+		if i > -1 {
+			name := v[:i]
+			value := v[i+1:]
+			dict[name] = value
+		}
+	}
+	return dict
+}
 
 func LookupString(key string, defaultValue string) string {
 	if value, ok := os.LookupEnv(key); !ok {
